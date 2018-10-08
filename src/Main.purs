@@ -18,9 +18,6 @@ import Signals (aspect, clicked, cursor, sceneDimensions)
 import Types as Types
 import Web.DOM.Node (Node, appendChild)
 
-foreign import undefined :: forall a. a
-foreign import spy :: forall a. a
-
 defaultDisplayOptions :: Display
 defaultDisplayOptions = { show: true, colorized: true, annotated: false }
 

@@ -14,8 +14,6 @@ import Signal.Channel (Channel, send)
 import Signal.DOM (DimensionPair)
 import Types as Types
 
-foreign import spy :: forall a. a
-
 foreign import document :: Effect Document
 
 foreign import _getElementById

@@ -1,6 +1,4 @@
 
-exports.spy = function(x) { console.log(x); return x; }
-
 exports._renderPointControl = function(dispatch, parse, just, nothing, boxPoint) {
   function addEventListeners(node, val, property) {
     node.addEventListener("mousedown", function (e) {

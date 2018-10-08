@@ -19,7 +19,6 @@ foreign import data Renderer :: Type
 foreign import data Scene :: Type
 foreign import data Sprite :: Type
 foreign import data Vector2 :: Type
--- foreign import data Vector3 :: Type
 
 type Vector3 = { x :: Number, y :: Number, z :: Number }
 

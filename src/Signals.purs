@@ -13,6 +13,7 @@ import UI (document, getElementById, nodeDimensions, nodeOffset, setCursor)
 import Web.DOM.Document (Document)
 import Web.DOM.Node (Node)
 
+-- |Signal of mouse position relative to node
 relativeMousePos :: Node -> Effect (Signal CoordinatePair)
 relativeMousePos node = do
   absPos <- mousePos
@@ -21,6 +22,7 @@ relativeMousePos node = do
   where
     adjust { x, y } { left, top } = { x: x - left, y: y - top }
 
+-- |Signal of the intersection of points with the mouse
 intersectionSignal :: Node -> Scene -> Camera -> Effect (Signal (Array Intersection))
 intersectionSignal node scene camera = do
   coords     <- relativeMousePos node
@@ -36,6 +38,7 @@ intersectionSignal node scene camera = do
       vec2 <- toVector2 coord
       intersects objs camera vec2
 
+-- |Signal of the dimensions of the DOM node containing the scene
 sceneDimensions :: Effect (Signal DimensionPair)
 sceneDimensions = do
   document' <- document
@@ -44,6 +47,7 @@ sceneDimensions = do
     Just node -> nodeDimensions node
     Nothing   -> pure (constant { w: 0, h: 0 })
 
+-- |Signal of the camera aspect ratio
 aspect :: Effect (Signal Number)
 aspect = do
   dimensions <- sceneDimensions
@@ -51,6 +55,7 @@ aspect = do
   where
     aspect' { w, h } = (toNumber w / toNumber h)
 
+-- |Consumes the intersection signal, rendering the appropriate cursor
 cursor :: Document -> Node -> Scene -> Camera -> Effect (Signal Unit)
 cursor document node scene camera = do
   signal <- intersectionSignal node scene camera
@@ -59,6 +64,7 @@ cursor document node scene camera = do
     toggleCursor [] = setCursor document "default"
     toggleCursor _  = setCursor document "pointer"
 
+-- |Signal of UIEvents triggered when a point is clicked
 clicked
   :: Node
   -> Scene

@@ -92,6 +92,7 @@ initState
       , display: { show: true, colorized: true, annotated: true }
       }
 
+-- |Signal of the ever-changing state
 stateSignal
   :: Node
   -> Scene
@@ -102,6 +103,7 @@ stateSignal
 stateSignal node scene camera chan init = do
   foldp updateState init <<< merge (subscribe chan) <$> clicked node scene camera
 
+-- |Fold over UIEvents and state
 updateState
   :: UIEvent -> State -> State
 
@@ -144,6 +146,7 @@ addAllToScene :: forall a. ThreeObj a => Scene -> Array a -> Effect Unit
 addAllToScene scene objs =
   traverse (addToScene scene) objs $> unit
 
+-- |Draw initial state into scene
 drawState :: State -> Scene -> Effect State
 drawState (State state) scene = do
   points <- traverse point state.points
@@ -164,6 +167,7 @@ drawState (State state) scene = do
         setPosition text x (y - 1.5) (z + 0.5)
         pure text
 
+-- |Render current state
 renderState :: Scene -> State -> Effect Unit
 renderState scene (State { display, points }) =
   traverse renderPoint points $> unit

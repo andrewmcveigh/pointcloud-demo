@@ -7,19 +7,23 @@
     <title>Pointcloud Demo</title>
     <style>
       body {
-        display: flex;
-        flex-flow: column;
         font-family: Iosevka;
         font-size: 11pt;
         height: 100vh;
         margin: 0;
         overflow: hidden;
       }
+      .container {
+        display: flex;
+        flex-flow: column;
+        height: 100%;
+      }
       #hud {
         background-color: #202020;
         box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.8);
         display: flex;
         flex-flow: row;
+        height: 120px;
         width: 100%;
         z-index: 99;
       }
@@ -48,9 +52,11 @@
     </style>
   </head>
   <body class="theme01">
-    <div id="hud">
-    </div>
-    <div id="scene">
+    <div class="container">
+      <div id="hud">
+      </div>
+      <div id="scene">
+      </div>
     </div>
     <script src="dist/main.js"></script>
   </body>

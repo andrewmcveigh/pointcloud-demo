@@ -57,7 +57,7 @@ initState
                       , label: "Point B"
                       , status: Green
                       , display: defaultDisplayOptions
-                      , x: 0.0, y: 8.0, z: -7.0
+                      , x: 9.0, y: 8.0, z: -7.0
                       }
               , Point { ref: Nothing
                       , labelRef: Nothing

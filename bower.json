@@ -1,0 +1,28 @@
+{
+  "name": "pointcloud-demo",
+  "version": "0.0.0",
+  "ignore": [
+    "**/.*",
+    "**/*~",
+    "**/#*#",
+    ".#*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "purescript-arrays": "^5.1.0",
+    "purescript-console": "^4.1.0",
+    "purescript-debug": "^4.0.0",
+    "purescript-effect": "^2.0.0",
+    "purescript-integers": "^4.0.0",
+    "purescript-math": "^2.1.1",
+    "purescript-maybe": "^4.0.0",
+    "purescript-prelude": "^4.0.1",
+    "purescript-signal": "^10.1.0",
+    "purescript-web-events": "^1.0.0",
+    "purescript-web-dom": "^1.0.0",
+    "purescript-web-uievents": "^1.0.0"
+  }
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pointcloud Demo</title>
+    <style>
+      body {
+        display: flex;
+        flex-flow: column;
+        font-family: Iosevka;
+        font-size: 11pt;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden;
+      }
+      #hud {
+        background-color: #202020;
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.8);
+        display: flex;
+        flex-flow: row;
+        width: 100%;
+        z-index: 99;
+      }
+      #hud .point-control {
+        display: flex;
+        color: #C0C0C0;
+        font-family: Iosevka;
+        padding: 10px;
+        padding-right: 0;
+        text-align: justify;
+        text-align-last: justify;
+      }
+      #hud .point-control:last-child {
+        padding-right: 10px;
+      }
+      #hud .point-control fieldset {
+        border: solid 1px #505050;
+      }
+      #scene {
+        flex: 1;
+        width: 100%;
+      }
+      label {
+        display: block;
+      }
+    </style>
+  </head>
+  <body class="theme01">
+    <div id="hud">
+    </div>
+    <div id="scene">
+    </div>
+    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
+    <script src="./dist/main.js"></script>
+  </body>
+</html>

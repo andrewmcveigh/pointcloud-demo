@@ -14,15 +14,13 @@
         overflow: hidden;
       }
       .container {
-        display: flex;
-        flex-flow: column;
         height: 100%;
       }
       #hud {
         background-color: #202020;
         box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.8);
         display: block;
-        flex-flow: row;
+        position: relative;
         width: 100%;
         z-index: 99;
       }
@@ -42,7 +40,7 @@
         border: solid 1px #505050;
       }
       #scene {
-        flex: 1;
+        height: 100%;
         width: 100%;
       }
       label {

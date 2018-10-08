@@ -5,26 +5,33 @@ import Data.Int (toNumber)
 import Data.Maybe (Maybe(..))
 import Effect (Effect)
 import Prelude (Unit, bind, map, negate, pure, (*), (+), (-), (/), (<$>), (=<<))
-import Signal (Signal, constant, foldp, get, map2, unwrap)
-import Signal.DOM (DimensionPair, MouseButton(..), mouseButtonPressed)
-import Three
-import Types
-import UI
+import Signal (Signal, constant, get, map2, unwrap)
+import Signal.DOM (CoordinatePair, DimensionPair, MouseButton(..), mouseButtonPressed, mousePos)
+import Three (Camera, Intersection, Scene, children, intersectionObj, intersects, toVector2)
+import Types (DisplayToggle(..), UIEvent(..))
+import UI (document, getElementById, nodeDimensions, nodeOffset, setCursor)
 import Web.DOM.Document (Document)
 import Web.DOM.Node (Node)
+
+relativeMousePos :: Node -> Effect (Signal CoordinatePair)
+relativeMousePos node = do
+  absPos <- mousePos
+  offset <- nodeOffset node
+  pure (map2 adjust absPos offset)
+  where
+    adjust { x, y } { left, top } = { x: x - left, y: y - top }
 
 intersectionSignal :: Node -> Scene -> Camera -> Effect (Signal (Array Intersection))
 intersectionSignal node scene camera = do
   coords     <- relativeMousePos node
   dimensions <- nodeDimensions node
-  let coords' = map2 adjust coords dimensions
-  unwrap (foldp intersectsChildren (pure []) coords')
+  unwrap (map intersectsChildren (map2 adjust coords dimensions))
   where
     adjust { x, y } { w, h } =
-      { x: (toNumber x / toNumber w) * 2.0 - 1.0
+      { x:   (toNumber x / toNumber w) * 2.0 - 1.0
       , y: - (toNumber y / toNumber h) * 2.0 + 1.0
       }
-    intersectsChildren coord _ = do
+    intersectsChildren coord = do
       objs <- children scene
       vec2 <- toVector2 coord
       intersects objs camera vec2

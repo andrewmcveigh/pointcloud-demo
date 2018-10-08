@@ -3,10 +3,7 @@ module Types where
 import Data.Maybe (Maybe(..))
 import Prelude (class Eq)
 import Three
-
 import Three as Three
-
-newtype UUID = UUID String
 
 data Status = Green | Yellow | Red
 derive instance eqStatus :: Eq Status

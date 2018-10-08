@@ -161,7 +161,7 @@ drawState (State state) scene = do
     label (Point { status, x, y, z }) =
       let { message } = Types.status status in do
         text <- mkText message 2 (Color 0) "Arial" "bold" 90
-        setPosition text x (y - 1.0) (z + 1.0)
+        setPosition text x (y - 1.5) (z + 0.5)
         pure text
 
 renderState :: Scene -> State -> Effect Unit

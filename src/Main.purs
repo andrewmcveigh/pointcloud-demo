@@ -28,7 +28,7 @@ near :: Number
 near = 10.0
 
 far :: Number
-far = 50.0
+far = 1000.0
 
 bgcolor :: Color
 bgcolor = Color 6710903 -- #666677
@@ -48,6 +48,7 @@ initState
                       , status: Red
                       , display: defaultDisplayOptions
                       , x: 1.0, y: 2.0, z: 3.0
+                      , radius: 1.0
                       }
               , Point { ref: Nothing
                       , labelRef: Nothing
@@ -55,6 +56,7 @@ initState
                       , status: Green
                       , display: defaultDisplayOptions
                       , x: 9.0, y: 8.0, z: -7.0
+                      , radius: 1.0
                       }
               , Point { ref: Nothing
                       , labelRef: Nothing
@@ -62,6 +64,7 @@ initState
                       , status: Yellow
                       , display: defaultDisplayOptions
                       , x: 2.0, y: -4.0, z: 2.0
+                      , radius: 1.0
                       }
               , Point { ref: Nothing
                       , labelRef: Nothing
@@ -69,6 +72,7 @@ initState
                       , status: Green
                       , display: defaultDisplayOptions
                       , x: 0.0, y: 0.0, z: 0.0
+                      , radius: 1.0
                       }
               , Point { ref: Nothing
                       , labelRef: Nothing
@@ -76,6 +80,7 @@ initState
                       , status: Red
                       , display: defaultDisplayOptions
                       , x: -12.0, y: -1.0, z: 0.0
+                      , radius: 1.0
                       }
               , Point { ref: Nothing
                       , labelRef: Nothing
@@ -83,6 +88,7 @@ initState
                       , status: Yellow
                       , display: defaultDisplayOptions
                       , x: 6.0, y: 0.0, z: -7.0
+                      , radius: 1.0
                       }
               ]
       , label: "Global"
@@ -127,9 +133,9 @@ updateState NoEvent state = state
 lighting :: Effect (Array Object3D)
 lighting = do
   ambientLight <- mkAmbientLight lightColor 0.7
-  light1 <- mkPointLight lightColor 1.0 0.0 0.0
-  light2 <- mkPointLight lightColor 1.0 0.0 0.0
-  light3 <- mkPointLight lightColor 1.0 0.0 0.0
+  light1 <- mkPointLight lightColor intensity distance decay
+  light2 <- mkPointLight lightColor intensity distance decay
+  light3 <- mkPointLight lightColor intensity distance decay
   setPosition light1     0.0    200.0  (-200.0)
   setPosition light2   100.0    200.0    100.0
   setPosition light3 (-100.0) (-200.0) (-100.0)
@@ -138,6 +144,10 @@ lighting = do
        , toObject3D light2
        , toObject3D light3
        ]
+  where
+    intensity = 1.0
+    distance  = 0.0
+    decay     = 0.0
 
 addAllToScene :: forall a. ThreeObj a => Scene -> Array a -> Effect Unit
 addAllToScene scene objs =
@@ -154,15 +164,18 @@ drawState (State state) scene = do
   where
     setRefs ((Point p) /\ oRef /\ lRef) =
       Point (p { ref = Just oRef, labelRef = Just lRef })
-    point (Point { status, x, y, z }) =
+    point (Point { status, x, y, z, radius }) =
       let { color, message } = Types.status status
           (Color col) = color in
-        mkPoint { color: col, flatShading: true } 1.0 x y z
+        mkPoint { color: col, flatShading: true } radius x y z
     label (Point { status, x, y, z }) =
       let { message } = Types.status status in do
         text <- mkText message 2 (Color 0) "Arial" "bold" 90
-        setPosition text x (y - 1.5) (z + 0.5)
+        setPosition text x (y - offsetY) (z + offsetZ)
         pure text
+      where
+        offsetY = 1.5
+        offsetZ = 0.5
 
 -- |Render current state
 renderState :: Scene -> State -> Effect Unit

@@ -36,6 +36,7 @@ data Point
       , x        :: X
       , y        :: Y
       , z        :: Z
+      , radius   :: Number
       }
 derive instance eqPoint :: Eq Point
 

@@ -1,7 +1,7 @@
 { pkgs ? import <nixpkgs> {} }:
 
 pkgs.stdenv.mkDerivation {
-  name = "purescript-nix-bootstrap";
+  name = "pointcloud-demo";
   src = ./.;
   buildInputs = [
     pkgs.git
@@ -26,8 +26,8 @@ pkgs.stdenv.mkDerivation {
   installPhase = ''
     mkdir -p $out/bin
     cp -r output/app.js node_modules $out/
-    echo "#!${pkgs.bash}/bin/bash" > $out/bin/purescript-nix-bootstrap
-    echo "${pkgs.nodejs-8_x}/bin/node $out/app.js" >> $out/bin/purescript-nix-bootstrap
-    chmod +x $out/bin/purescript-nix-bootstrap
+    echo "#!${pkgs.bash}/bin/bash" > $out/bin/pointcloud-demo
+    echo "${pkgs.nodejs-8_x}/bin/node $out/app.js" >> $out/bin/pointcloud-demo
+    chmod +x $out/bin/pointcloud-demo
   '';
 }
